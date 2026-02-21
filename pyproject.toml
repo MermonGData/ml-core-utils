@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ml_core_utils"
+version = "0.1.0"
+description = "Core utilities for ML projects"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas",
+    "numpy"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ml_core_utils*"]
