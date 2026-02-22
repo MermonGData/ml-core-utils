@@ -27,12 +27,33 @@ def load_model_artifact(file_path):
         raise FileNotFoundError(f"No artifact found at {path}")
     return joblib.load(path)
 
-def load_multiple_artifacts(directory, filenames):
-    """Helper to load a list of files from the same folder into a dict."""
+def load_artifacts(directory, filenames, extension=".pkl", ignore_missing=True):
+    """
+    Loads multiple pickle files into a dictionary.
+    
+    Args:
+        directory (str/Path): Folder containing artifacts.
+        filenames (list): List of filenames (without extension).
+        extension (str): File extension, defaults to ".pkl".
+        ignore_missing (bool): If True, warns instead of crashing.
+    """
     dir_path = Path(directory)
-    return {f: joblib.load(dir_path / f) for f in filenames}
+    artifacts = {}
+    
+    for name in filenames:
+        file_path = dir_path / f"{name}{extension}"
+        
+        if not file_path.exists():
+            if ignore_missing:
+                print(f"⚠️ Warning: {file_path} not found. Skipping.")
+                continue
+            raise FileNotFoundError(f"Missing required artifact: {file_path}")
+            
+        artifacts[name] = joblib.load(file_path)
+        
+    return artifacts
 
-# --- EXPORT FUNCTIONS (The Two Versions) ---
+# --- EXPORT FUNCTIONS ---
 
 def export_model_session(model, artifacts, metadata_info, base_path="../models", version="v1"):
     """

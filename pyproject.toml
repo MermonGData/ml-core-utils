@@ -12,6 +12,8 @@ dependencies = [
     "numpy"
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["ml_core_utils*"]
+[tool.setuptools]
+packages = ["ml_core_utils"]
+
+[tool.setuptools.package-dir]
+"ml_core_utils" = "."
