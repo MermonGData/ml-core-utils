@@ -11,7 +11,7 @@ def setup_notebook(seed: int = 42):
     display(HTML("<style>.output_scroll { height: auto !important; }</style>"))
 
 def get_project_root():
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    return os.path.abspath(os.getcwd())
 
 def resolve_project_path(*paths, marker="data"):
     current = os.path.abspath(os.getcwd())
